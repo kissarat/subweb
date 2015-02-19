@@ -1,0 +1,24 @@
+#\$error, #\$invalid {
+    color: red;
+}
+
+.tabs > :first-child > label {
+    cursor: pointer;
+    border: 1px solid transparent;
+}
+
+.tabs > :first-child > label:hover {
+    border-color: #999;
+}
+
+.tabs > :first-child > label.visible {
+    background-color: #999;
+}
+
+.tabs > article > section {
+    display: none;
+}
+
+.tabs > article > section.visible {
+    display: block;
+}
