@@ -8,29 +8,51 @@
     <script src="analyze.js"></script>
 </head>
 <body>
-<label for="$language">Working language</label>
-<select id="$language">
-    <option value="en">English</option>
-    <option value="ru">Russian</option>
-    <option value="uk">Ukrainian</option>
-</select>
-<div id="$error"></div>
+<div id="background"></div>
+<form id="widgets">
+    <fieldset name="text_input">
+        <legend>Input</legend>
+        <input type="file" id="file" />
+        <textarea name="input" placeholder="Text"></textarea>
+    </fieldset>
+</form>
+<label>Working language
+    <select id="language">
+        <option value="en">English</option>
+        <option value="ru">Russian</option>
+        <option value="uk">Ukrainian</option>
+    </select>
+</label>
+<label>Encoding
+    <select id="encoding" style="display: none">
+        <option value="utf-8">UTF-8</option>
+    </select>
+</label>
+<div id="error"></div>
 <div class="tabs">
-    <div>
-        <label for="$stopwords_list">Stopwords</label>
-        <label for="$canonization">Canonization</label>
+    <div class="tabs-buttons">
+        <label for="stopwords">Stopwords</label>
+        <label for="canonization">Canonization</label>
+        <label for="settings">Settings</label>
     </div>
     <article>
-        <section id="$stopwords_list" data-require="stopwords">
+        <section id="stopwords" data-require="stopwords">
+            <textarea></textarea>
         </section>
-        <section id="$canonization" data-require="stopwords">
+        <section id="canonization" data-require="stopwords">
             <form>
-                <input type="file" id="$file" />
-                <textarea id="$input" rows="10" cols="100" placeholder="Текст"></textarea>
-                <button id="$canonize" type="button" disabled>Канонізувати</button>
+                <button name="canonize" type="button">Canonize</button>
+                <textarea name="output"></textarea>
             </form>
         </section>
-        <section id="$invalid" class="visible">
+        <section id="settings" data-require="stopwords">
+            <form>
+                <input type="text" name="background"
+                       value="image/background.jpg"
+                       placeholder="Background image or color" />
+            </form>
+        </section>
+        <section id="invalid" class="visible">
             Something wrong happened or your browser too old
         </section>
     </article>

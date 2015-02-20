@@ -1,3 +1,5 @@
+var stopwords = {};
+
 function canonize(text, language) {
     text = text.trim();
     if (!text)
@@ -9,21 +11,21 @@ function canonize(text, language) {
     text = text.replace(/(\d+) ?[\-–] ?(\d+)/g, function(match, start, end) {
         return start + ' ' + end;
     });
-    text = text.replace(/[\.,!\?\*:;\-\(\)'"†]/g, '');
-
-
+    text = text.replace(/[\.,!\?\*:;\-\(\)'"…†]/g, '');
+    text = canonize[language](text);
     text = text.split(' ');
     var output = [];
+    var _stopwords = stopwords[language];
     for (var i = 0; i < text.length; i++) {
         var word = text[i];
-        if (stopwords.indexOf(word) < 0)
+        if (_stopwords.indexOf(word) < 0)
             output.push(word);
     }
     return output;
 }
 
-canonize.cyrillic = function() {
-    return input.replace(/[–«»—́]/g, '');
+canonize.cyrillic = function(text) {
+    return text.replace(/[–«»—́]/g, '');
 };
 
 canonize.uk = function(text) {

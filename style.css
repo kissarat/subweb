@@ -1,24 +1,117 @@
-#\$error, #\$invalid {
+#error, #invalid {
     color: red;
 }
 
-.tabs > :first-child > label {
+body {
+    text-align: center;
+    /*font-family: "Sugeo UI", Ubuntu, serif;*/
+}
+
+#widgets {
+    display: none;
+}
+
+.tabs {
+    margin: auto;
+    text-align: left;
+    width: 90vw;
+    /*min-height: 90vw;*/
+}
+
+@media(min-width: 10in) {
+    .tabs {
+        width: 9in;
+    }
+}
+
+#background {
+    position: fixed;
+    top: 0;
+    right: 0;
+    bottom: 0;
+    left: 0;
+    background: center no-repeat;
+    background-size: cover;
+    z-index: -1;
+}
+
+.tabs-buttons {
+    padding-top: 1mm;
+}
+
+.tabs-buttons > label {
     cursor: pointer;
     border: 1px solid transparent;
 }
 
-.tabs > :first-child > label:hover {
-    border-color: #999;
+.tabs-buttons > label:hover,
+.tabs-buttons > label.visible {
+    text-decoration: underline;
 }
 
-.tabs > :first-child > label.visible {
-    background-color: #999;
+.tabs-buttons > label.visible:hover {
+    cursor: default;
+    border-color: transparent;
+}
+
+.tabs > article {
+    width: inherit;
+    height: inherit;
 }
 
 .tabs > article > section {
+    width: inherit;
+    height: inherit;
     display: none;
 }
 
 .tabs > article > section.visible {
     display: block;
+}
+
+form, fieldset {
+    width: inherit;
+    height: inherit;
+}
+
+form > *,
+fieldset > *
+{
+    display: block;
+    margin: .2em auto;
+    /*width: 96%;*/
+}
+
+fieldset > * {
+    margin: 1mm;
+}
+
+button, input[type=button], input[type=submit], input[type=reset] {
+    background-color: rgba(192, 192, 192, 0.3);
+    border: 1px solid #999;
+    cursor: pointer;
+}
+
+form > button, form > input[type=button],
+form > input[type=submit], form > input[type=reset] {
+    padding: 5px 8px;
+    /*float: left;*/
+}
+
+form > div > * {
+    margin: 1mm;
+}
+
+fieldset {
+    padding: 0;
+    border: 1px solid #999;
+}
+
+textarea {
+    width: inherit;
+    background-color: rgba(255, 255, 255, 0.5);
+}
+
+textarea[name=input] {
+    min-height: 30vh;
 }
