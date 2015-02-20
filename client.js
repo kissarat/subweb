@@ -255,6 +255,13 @@ var init = {
         };
     },
 
+    diff: function() {
+        var $form = this.querySelector('form');
+        $form.compare.onclick = function() {
+            $id('diff_html').innerHTML = diffString($form.one.value, $form.two.value);
+        };
+    },
+
     settings: function() {
         //if (!(window.matchMedia && matchMedia('max-width: 2in')))
         var $bg = $name('background');

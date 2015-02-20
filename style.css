@@ -113,9 +113,20 @@ fieldset {
 
 textarea {
     width: inherit;
+    min-height: 20vh;
     background-color: rgba(255, 255, 255, 0.5);
 }
 
 textarea[name=input] {
     min-height: 30vh;
+}
+
+ins {
+    text-decoration: none;
+    background-color: rgba(0, 255, 0, 0.2);
+}
+
+del {
+    text-decoration: none;
+    background-color: rgba(255, 0, 0, 0.2);
 }
