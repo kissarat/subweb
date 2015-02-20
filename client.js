@@ -188,6 +188,21 @@ var widget = {
         if (!$widget)
             return $widget;
         $widget = $widget.cloneNode(true);
+        $widget.querySelector('[type=file]').onchange = function(e) {
+            try {
+                var file = e.target.files[0];
+                if (!window.FileReader)
+                    throw 'Ваш браузер не підтримує читання з файлів';
+                var reader = new FileReader();
+                reader.onloadend = function(e) {
+                    $widget.querySelector('[name=input]').value = e.target.result;
+                };
+                reader.readAsText(file, $id('encoding').value);
+            }
+            catch (ex) {
+                report(ex);
+            }
+        };
         if (widget[name])
             return widget[name]($widget);
         else
@@ -208,21 +223,35 @@ var init = {
             var text = canonize($form.input.value, $id('language').value);
             $form.output.value = text.join(' ');
         };
+    },
 
-        $form.file.onchange = function(e) {
-            try {
-                var file = e.target.files[0];
-                if (!window.FileReader)
-                    throw 'Ваш браузер не підтримує читання з файлів';
-                var reader = new FileReader();
-                reader.onloadend = function(e) {
-                    $form.input.value = e.target.result;
-                };
-                reader.readAsText(file, $id('encoding').value);
+    frequency_analysis: function() {
+        var $form = this.querySelector('form');
+        var $table = this.querySelector('table');
+        var $input = widget.create('text_input');
+        $form.insertBefore($input, $form.frequency_analyze);
+        $form.frequency_analyze.onclick = function() {
+            var text = canonize($form.input.value, $id('language').value);
+            text = frequency_analyze(text);
+            $table.remove();
+            $table.innerHTML = '';
+            for (var i = 0; i < text.length; i++) {
+                var r = text[i];
+                var $row = document.createElement('tr');
+                var sw = stopwords[$id('language').value];
+                if (sw.indexOf(r[0]) >= 0)
+                    $row.classList.add('stopword');
+                $row.innerHTML = '<td>' + r[0]
+                    + '</td><td>' + r[1] + '</td>';
+                $table.appendChild($row);
             }
-            catch (ex) {
-                report(ex);
-            }
+            $form.parentNode.appendChild($table);
+        };
+        $form.stopwords.onchange = function() {
+            if (this.checked)
+                css_stopword.removeProperty('display');
+            else
+                css_stopword.display = 'none';
         };
     },
 
@@ -307,6 +336,19 @@ document.addEventListener('DOMContentLoaded', function() {
             $id(key).value = localStorage[key];
     }
 });
+
+var css_stopword;
+
+onload = function() {
+    var rules = document.styleSheets[0].rules;
+    for (var i = 0; i < rules.length; i++) {
+        var rule = rules[i];
+        if ('.stopword' == rule.selectorText) {
+            css_stopword = rule.style;
+            break;
+        }
+    }
+};
 
 onunload = function() {
     localStorage.tab = tabs.$current.id;

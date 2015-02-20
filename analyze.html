@@ -33,6 +33,7 @@
     <div class="tabs-buttons">
         <label for="stopwords">Stopwords</label>
         <label for="canonization">Canonization</label>
+        <label for="frequency_analysis">Frequency</label>
         <label for="settings">Settings</label>
     </div>
     <article>
@@ -44,6 +45,13 @@
                 <button name="canonize" type="button">Canonize</button>
                 <textarea name="output"></textarea>
             </form>
+        </section>
+        <section id="frequency_analysis" data-require="stopwords">
+            <form>
+                <button name="frequency_analyze" type="button">Count</button>
+                <label><input type="checkbox" name="stopwords" checked /> show stopwords</label>
+            </form>
+            <table></table>
         </section>
         <section id="settings" data-require="stopwords">
             <form>

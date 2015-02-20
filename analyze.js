@@ -14,15 +14,12 @@ function canonize(text, language) {
     text = text.replace(/[\.,!\?\*:;\-\(\)'"…†]/g, '');
     text = canonize[language](text);
     text = text.split(' ');
-    var output = [];
-    var _stopwords = stopwords[language];
-    for (var i = 0; i < text.length; i++) {
-        var word = text[i];
-        if (_stopwords.indexOf(word) < 0)
-            output.push(word);
-    }
-    return output;
+    return text;
 }
+
+canonize.en = function(text) {
+    return text;
+};
 
 canonize.cyrillic = function(text) {
     return text.replace(/[–«»—́]/g, '');
@@ -38,3 +35,20 @@ canonize.uk = function(text) {
     });
     return text;
 };
+
+function frequency_analyze(text) {
+    var words = {};
+    var word;
+    for (var i = 0; i < text.length; i++) {
+        word = text[i];
+        words[word] = (words[word] || 0) + 1;
+    }
+    var f = [];
+    for(word in words) {
+        f.push([word, words[word]]);
+    }
+    f.sort(function(a, b) {
+        return b[1] - a[1];
+    });
+    return f;
+}
