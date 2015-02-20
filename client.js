@@ -95,6 +95,10 @@ function change($target, value) {
     fire('event', $target);
 }
 
+function click($target) {
+    fire('click', $target);
+}
+
 function reset($target) {
     if ($target instanceof Event)
         $target = this;
@@ -214,6 +218,8 @@ var widget = {
     }
 };
 
+//region load
+
 var init = {
     canonization: function() {
         var $form = this.querySelector('form');
@@ -318,7 +324,6 @@ document.addEventListener('DOMContentLoaded', function() {
             });
         }
     }
-    tabs.open(localStorage.tab || tabs.labels(':first-child')[0].getAttribute('for'));
 
     $id('language').onchange = function() {
         load_resources(tabs.$current);
@@ -342,12 +347,15 @@ document.addEventListener('DOMContentLoaded', function() {
         if (localStorage[key])
             $id(key).value = localStorage[key];
     }
+
+    click(tabs.label(localStorage.tab) || $labels[0]);
 });
 
 var css_stopword;
 
 onload = function() {
-    var rules = document.styleSheets[0].rules;
+    var rules = document.styleSheets[0];
+    rules = rules.cssRules || rules.rules;
     for (var i = 0; i < rules.length; i++) {
         var rule = rules[i];
         if ('.stopword' == rule.selectorText) {
@@ -364,3 +372,5 @@ onunload = function() {
         localStorage[key] = $id(key).value;
     }
 };
+
+//endregion
